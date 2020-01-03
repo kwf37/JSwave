@@ -13,3 +13,7 @@ A Javascript visualizer for Verilog Value Change Dump (VCD) files.
 -   JSwave ignores all simulation keywords in the standard 4-value VCD file. This may be changed later, but we believe that the simulation keywords are redundant conventions and do not affect the functionality of JSwave
 
 -   Comment handling and Simulation keywords are ignored in a hacky way- should be a nicer way to ignore them
+
+-   As a first pass, we will mimic the layout and ui of GTKwave (http://gtkwave.sourceforge.net/)
+
+-   Example VCD files are in the `examples/` directory and should be run using GTKwave to see sample output
