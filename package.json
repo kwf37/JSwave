@@ -87,6 +87,7 @@
         "@types/mocha": "^5.2.7",
         "@types/parsimmon": "^1.10.0",
         "electron-squirrel-startup": "^1.0.0",
-        "parsimmon": "^1.13.0"
+        "parsimmon": "^1.13.0",
+        "ts-node": "^8.5.4"
     }
 }
