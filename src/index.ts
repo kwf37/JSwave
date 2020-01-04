@@ -58,30 +58,3 @@ app.on("activate", () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-
-// Test Lexer
-let inputText = ` 
-$date June 26, 1989 10:05:41
-$end
-$version VERILOG-SIMULATOR 1.0a
-$end
-$timescale 1 ns
-$end
-$scope module top $end
-$scope module m1 $end
-$var trireg 1 *@ net1 $end
-$var trireg 1 *# net2 $end
-$var trireg 1 *$ net3 $end
-$upscope $end
-$scope task t1 $end
-$var reg 32 (k accumulator[31:0] $end
-$var integer 32 {2 index $end
-$upscope $end
-$upscope $end
-$enddefinitions $end
-$comment
-Note: $dumpvars was executed at time '#500'.
-All initial values are dumped at this time.
-$end`;
-
-console.log(VCDLexer.tokenize(inputText));
