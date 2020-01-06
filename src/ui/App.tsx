@@ -5,7 +5,8 @@ import { Toolbar } from "./components/Toolbar";
 import { WavePanel } from "./components/WavePanel";
 import { ScopeTree } from "./components/ScopeTree";
 import { Layout } from "./components/Layout";
-import { VCD } from "../vcd_utils/ast";
+import { VCD, Scope } from "../vcd_utils/ast";
+import CurrentScope from "./components/CurrentScope";
 
 // Extend global window type based off src/preload.js
 declare global {
@@ -17,6 +18,9 @@ declare global {
 
 const App: React.FC<{}> = () => {
     const [vcd, setVCD] = useState<VCD | null>(null);
+    const [currScope, setCurrScope] = useState<Scope | null>(null);
+
+    // Listen for messages from main process
     const callback = (_: any, arg: any) => {
         if (arg.status) {
             // Parsed Successfully!
@@ -28,11 +32,17 @@ const App: React.FC<{}> = () => {
         }
     };
     window.registerVCDCallback(callback);
+
+    // Pass current scope setter to child processes
+    const setScope = (s: Scope | null): void => {
+        setCurrScope(s);
+    };
+
     return (
         <Layout>
             <Toolbar />
-            <ScopeTree scope={vcd && vcd.toplevel} />
-            <WavePanel />
+            <ScopeTree scope={vcd && vcd.toplevel} setCurrScope={setScope} />
+            <CurrentScope scope={currScope}></CurrentScope>
         </Layout>
     );
 };

@@ -11,6 +11,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 
 interface ScopeTreeProps {
     scope: Scope | null;
+    setCurrScope: (s: Scope | null) => void;
 }
 
 const ScopeLevel: React.FC<ScopeTreeProps> = props => {
@@ -18,6 +19,7 @@ const ScopeLevel: React.FC<ScopeTreeProps> = props => {
 
     const handleClick = () => {
         setOpen(!open);
+        props.setCurrScope(props.scope);
     };
     return (
         <>
@@ -31,7 +33,12 @@ const ScopeLevel: React.FC<ScopeTreeProps> = props => {
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         {props.scope.sub_scopes.map(subscope => {
-                            return <ScopeLevel scope={subscope}></ScopeLevel>;
+                            return (
+                                <ScopeLevel
+                                    scope={subscope}
+                                    setCurrScope={props.setCurrScope}
+                                ></ScopeLevel>
+                            );
                         })}
                     </List>
                 </Collapse>
@@ -56,7 +63,12 @@ export const ScopeTree: React.FC<ScopeTreeProps> = props => {
                 </ListSubheader>
             }
         >
-            {props.scope && <ScopeLevel scope={props.scope}></ScopeLevel>}
+            {props.scope && (
+                <ScopeLevel
+                    scope={props.scope}
+                    setCurrScope={props.setCurrScope}
+                ></ScopeLevel>
+            )}
         </List>
     );
 };

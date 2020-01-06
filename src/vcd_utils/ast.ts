@@ -108,6 +108,26 @@ export interface Variable {
     ref: Ref;
 }
 
+function isRef2(ref: Ref): ref is Ref2 {
+    return (ref as Ref2).msb_index !== undefined;
+}
+function isRef1(ref: Ref): ref is Ref1 {
+    return (ref as Ref1).index !== undefined;
+}
+function isRef0(ref: Ref): ref is Ref0 {
+    return !isRef2(ref) && !isRef1(ref);
+}
+
+export function refString(r: Ref): string {
+    if (isRef2(r)) {
+        return `${r.identifier} [${r.msb_index}:${r.lsb_index}]`;
+    } else if (isRef1(r)) {
+        return `${r.identifier} [${r.index}]`;
+    } else {
+        return r.identifier;
+    }
+}
+
 export interface Timescale {
     num: number;
     unit: TimeUnit;
