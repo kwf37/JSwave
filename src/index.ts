@@ -1,4 +1,8 @@
-import { app, BrowserWindow } from "electron";
+import { app, dialog, BrowserWindow, Menu, MenuItem } from "electron";
+import * as fs from "fs";
+import * as path from "path";
+import VCDParser from "./vcd_utils/parser";
+
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -14,9 +18,54 @@ let mainWindow: Electron.BrowserWindow;
 const createWindow = () => {
     // Create the browser window.
     mainWindow = new BrowserWindow({
+        webPreferences: {
+            preload: path.join(app.getAppPath(), "src", "preload.js"),
+        },
         height: 600,
         width: 800,
     });
+
+    // Menu Additions
+
+    // File Loading
+    function readFile(filename: string) {
+        let file = fs.readFileSync(
+            path.join(__dirname, "..", "..", "examples", "test.vcd"),
+            "utf-8"
+        );
+        return file;
+    }
+    const openFileItem = new MenuItem({
+        label: "Open File",
+        click: () => {
+            dialog
+                .showOpenDialog({
+                    properties: ["openFile"],
+                    filters: [
+                        { name: "Value Change Dump", extensions: ["vcd"] },
+                    ],
+                })
+                .then(
+                    filepath => {
+                        console.log("Success!");
+                        console.log(filepath);
+                        let file = readFile(filepath.filePaths[0]);
+                        let parsed = VCDParser.vcd.parse(file);
+                        mainWindow.webContents.send("vcd-file", parsed);
+                    },
+                    error => {
+                        console.log("Error!");
+                        console.log(error);
+                    }
+                );
+        },
+    });
+
+    // Add to the file submenu- currently just a hack until we finish our own menu
+    // I found the index by logging the getApllicationMenu object and inspecting items
+    // console.log(Menu.getApplicationMenu.items);
+    const fileSubMenu = Menu.getApplicationMenu().items[0];
+    fileSubMenu.submenu.insert(0, openFileItem);
 
     // and load the index.html of the app.
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
@@ -54,6 +103,3 @@ app.on("activate", () => {
         createWindow();
     }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.

@@ -1,13 +1,18 @@
-import React from 'react';
-import './Layout.css';
+import React from "react";
+import "./Layout.css";
 
-import { Toolbar } from './Toolbar';
-import { WavePanel } from './WavePanel';
-import { Menu } from './Menu';
+import { Toolbar } from "./Toolbar";
+import { WavePanel } from "./WavePanel";
+import { Menu } from "./Menu";
 
-export interface LayoutProps {
-
+declare global {
+    interface Window {
+        sendSyncMessage: any;
+        registerVCDCallback: (f: (event: any, arg: any) => void) => void;
+    }
 }
+
+export interface LayoutProps {}
 
 export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
     return (
@@ -26,4 +31,4 @@ export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
             </div>
         </div>
     );
-}
+};

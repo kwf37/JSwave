@@ -17,3 +17,5 @@ A Javascript visualizer for Verilog Value Change Dump (VCD) files.
 -   As a first pass, we will mimic the layout and ui of GTKwave (http://gtkwave.sourceforge.net/)
 
 -   Example VCD files are in the `examples/` directory and should be run using GTKwave to see sample output
+
+-   ipcMain and ipcRenderer are convenient classes for implementing main process and renderer process communication.

@@ -1,6 +1,12 @@
 import { expect } from "chai";
-import VCDParser from "../src/parser";
-import { Encoding, TimeUnit, VariableType, ScopeType, Value } from "../src/ast";
+import VCDParser from "../src/vcd_utils/parser";
+import {
+    Encoding,
+    TimeUnit,
+    VariableType,
+    ScopeType,
+    Value,
+} from "../src/vcd_utils/ast";
 
 describe("Parser", () => {
     describe("Comments", () => {
@@ -384,7 +390,7 @@ describe("Parser", () => {
             bx {2
             $end
             #2010
-            1*$\n`);
+            1*$`);
             console.log(parsed);
         });
     });

@@ -20,7 +20,7 @@ import {
 } from "./ast";
 
 function token(parser: P.Parser<any>) {
-    return parser.skip(P.whitespace);
+    return parser.skip(P.alt(P.whitespace, P.eof));
 }
 function word(str: string) {
     return P.string(str).thru(token);
