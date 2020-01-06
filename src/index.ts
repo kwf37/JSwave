@@ -29,10 +29,7 @@ const createWindow = () => {
 
     // File Loading
     function readFile(filename: string) {
-        let file = fs.readFileSync(
-            path.join(__dirname, "..", "..", "examples", "test.vcd"),
-            "utf-8"
-        );
+        let file = fs.readFileSync(filename, "utf-8");
         return file;
     }
     const openFileItem = new MenuItem({
@@ -48,7 +45,6 @@ const createWindow = () => {
                 .then(
                     filepath => {
                         console.log("Success!");
-                        console.log(filepath);
                         let file = readFile(filepath.filePaths[0]);
                         let parsed = VCDParser.vcd.parse(file);
                         mainWindow.webContents.send("vcd-file", parsed);

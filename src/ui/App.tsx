@@ -1,44 +1,40 @@
-import * as React from "react";
+import React, { useState } from "react";
 import * as ReactDOM from "react-dom";
 import "./App.css";
 import { Toolbar } from "./components/Toolbar";
 import { WavePanel } from "./components/WavePanel";
-import { Menu } from "./components/Menu";
+import { ScopeTree } from "./components/ScopeTree";
 import { Layout } from "./components/Layout";
 import { VCD } from "../vcd_utils/ast";
 
-interface AppState {
-    vcd: VCD | null;
-}
-// Toplevel app state
-let state: AppState = {
-    vcd: null,
-};
-
-// Listen for new VCD file selections from electron filechooser dialog
+// Extend global window type based off src/preload.js
 declare global {
     interface Window {
         sendSyncMessage: any;
         registerVCDCallback: (f: (event: any, arg: any) => void) => void;
     }
 }
-function callback(_: any, arg: any) {
-    if (arg.status) {
-        // Parsed Successfully!
-        const vcd = arg.value;
-        state.vcd = vcd;
-        console.log(state);
-    } else {
-        console.log("File did not parse correctly:");
-    }
-}
-window.registerVCDCallback(callback);
 
-ReactDOM.render(
-    <Layout>
-        <Toolbar />
-        <Menu />
-        <WavePanel />
-    </Layout>,
-    document.getElementById("root")
-);
+const App: React.FC<{}> = () => {
+    const [vcd, setVCD] = useState<VCD | null>(null);
+    const callback = (_: any, arg: any) => {
+        if (arg.status) {
+            // Parsed Successfully!
+            setVCD(arg.value);
+            console.log("After setVCD");
+            console.log(vcd);
+        } else {
+            console.log("File did not parse correctly:");
+        }
+    };
+    window.registerVCDCallback(callback);
+    return (
+        <Layout>
+            <Toolbar />
+            <ScopeTree scope={vcd && vcd.toplevel} />
+            <WavePanel />
+        </Layout>
+    );
+};
+
+ReactDOM.render(<App />, document.getElementById("root"));

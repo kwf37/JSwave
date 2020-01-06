@@ -22,10 +22,10 @@ export interface Timestep {
 //          Scope Type Definitions
 // ========================================
 export class Scope {
-    private type: ScopeType;
-    private identifier: string;
-    private variables: Variable[];
-    private sub_scopes: Scope[];
+    public type: ScopeType;
+    public identifier: string;
+    public variables: Variable[];
+    public sub_scopes: Scope[];
 
     constructor(type: ScopeType, identifier: string) {
         this.type = type;
