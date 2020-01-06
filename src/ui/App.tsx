@@ -1,7 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import "./App.css";
-
+import { Toolbar } from "./components/Toolbar";
+import { WavePanel } from "./components/WavePanel";
+import { Menu } from "./components/Menu";
 import { Layout } from "./components/Layout";
 import { VCD } from "../vcd_utils/ast";
 
@@ -14,6 +16,12 @@ let state: AppState = {
 };
 
 // Listen for new VCD file selections from electron filechooser dialog
+declare global {
+    interface Window {
+        sendSyncMessage: any;
+        registerVCDCallback: (f: (event: any, arg: any) => void) => void;
+    }
+}
 function callback(_: any, arg: any) {
     if (arg.status) {
         // Parsed Successfully!
@@ -26,4 +34,11 @@ function callback(_: any, arg: any) {
 }
 window.registerVCDCallback(callback);
 
-ReactDOM.render(<Layout />, document.getElementById("root"));
+ReactDOM.render(
+    <Layout>
+        <Toolbar />
+        <Menu />
+        <WavePanel />
+    </Layout>,
+    document.getElementById("root")
+);
