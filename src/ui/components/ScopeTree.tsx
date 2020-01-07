@@ -1,5 +1,6 @@
 import React from "react";
 import { Scope } from "../../vcd_utils/ast";
+import './ScopeTree.css';
 
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
@@ -34,15 +35,18 @@ const ScopeLevel: React.FC<ScopeTreeProps> = props => {
                     <List component="div" disablePadding>
                         {props.scope.sub_scopes.map(subscope => {
                             return (
-                                <ScopeLevel
-                                    scope={subscope}
-                                    setCurrScope={props.setCurrScope}
-                                ></ScopeLevel>
+                                <div className="nestedPadding">
+                                    <ScopeLevel
+                                        scope={subscope}
+                                        setCurrScope={props.setCurrScope}
+                                    ></ScopeLevel>
+                                </div>
                             );
                         })}
                     </List>
                 </Collapse>
-            )}
+            )
+            }
         </>
     );
 };
