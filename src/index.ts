@@ -59,9 +59,15 @@ const createWindow = () => {
 
     // Add to the file submenu- currently just a hack until we finish our own menu
     // I found the index by logging the getApllicationMenu object and inspecting items
-    // console.log(Menu.getApplicationMenu.items);
-    const fileSubMenu = Menu.getApplicationMenu().items[0];
-    fileSubMenu.submenu.insert(0, openFileItem);
+
+    // Changed it to a loop since the order is diff for mac
+    for (var i = 0; i < Menu.getApplicationMenu().items.length; i++) {
+        if (Menu.getApplicationMenu().items[i].label === 'File') {
+            const fileSubMenu = Menu.getApplicationMenu().items[i];
+            fileSubMenu.submenu.insert(0, openFileItem);
+            break;
+        }
+    }
 
     // and load the index.html of the app.
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
@@ -76,6 +82,9 @@ const createWindow = () => {
         // when you should delete the corresponding element.
         mainWindow = null;
     });
+
+    // Manually set application menu at the end to work for mac
+    Menu.setApplicationMenu(Menu.getApplicationMenu());
 };
 
 // This method will be called when Electron has finished
