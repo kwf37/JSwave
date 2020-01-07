@@ -25,10 +25,10 @@ const ScopeLevel: React.FC<ScopeTreeProps> = props => {
     return (
         <>
             <ListItem button onClick={handleClick}>
-                <ListItemText primary={props.scope && props.scope.identifier} />
                 {props.scope &&
                     props.scope.sub_scopes.length > 0 &&
                     (open ? <ExpandLess /> : <ExpandMore />)}
+                <ListItemText primary={props.scope && props.scope.identifier} />
             </ListItem>
             {props.scope && props.scope.sub_scopes.length > 0 && (
                 <Collapse in={open} timeout="auto" unmountOnExit>
