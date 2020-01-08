@@ -1,5 +1,6 @@
 import React from "react";
 import { Scope } from "../../vcd_utils/ast";
+import './ScopeTree.css';
 
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
@@ -24,25 +25,28 @@ const ScopeLevel: React.FC<ScopeTreeProps> = props => {
     return (
         <>
             <ListItem button onClick={handleClick}>
-                <ListItemText primary={props.scope && props.scope.identifier} />
                 {props.scope &&
                     props.scope.sub_scopes.length > 0 &&
                     (open ? <ExpandLess /> : <ExpandMore />)}
+                <ListItemText primary={props.scope && props.scope.identifier} />
             </ListItem>
             {props.scope && props.scope.sub_scopes.length > 0 && (
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         {props.scope.sub_scopes.map(subscope => {
                             return (
-                                <ScopeLevel
-                                    scope={subscope}
-                                    setCurrScope={props.setCurrScope}
-                                ></ScopeLevel>
+                                <div className="nestedPadding">
+                                    <ScopeLevel
+                                        scope={subscope}
+                                        setCurrScope={props.setCurrScope}
+                                    ></ScopeLevel>
+                                </div>
                             );
                         })}
                     </List>
                 </Collapse>
-            )}
+            )
+            }
         </>
     );
 };
@@ -58,7 +62,7 @@ export const ScopeTree: React.FC<ScopeTreeProps> = props => {
             component="nav"
             aria-labelledby="nested-list-subheader"
             subheader={
-                <ListSubheader component="div" id="nested-list-subheader">
+                <ListSubheader disableSticky component="div" id="nested-list-subheader">
                     Scope Hierarchy
                 </ListSubheader>
             }
