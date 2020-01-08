@@ -14,6 +14,7 @@ export interface Version {
     version: string;
 }
 
+// TODO sort timesteps?
 export interface Timestep {
     time: number;
     changes: BitValue[];

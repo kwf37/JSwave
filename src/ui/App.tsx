@@ -5,7 +5,7 @@ import { Toolbar } from "./components/Toolbar";
 import { WavePanel } from "./components/WavePanel";
 import { ScopeTree } from "./components/ScopeTree";
 import { Layout } from "./components/Layout";
-import { VCD, Scope } from "../vcd_utils/ast";
+import { VCD, Scope, Variable } from "../vcd_utils/ast";
 import CurrentScope from "./components/CurrentScope";
 
 // Extend global window type based off src/preload.js
@@ -19,6 +19,7 @@ declare global {
 const App: React.FC<{}> = () => {
     const [vcd, setVCD] = useState<VCD | null>(null);
     const [currScope, setCurrScope] = useState<Scope | null>(null);
+    const [displayVars, setDisplayVars] = useState<Variable[]>([]);
 
     // Listen for messages from main process
     const callback = (_: any, arg: any) => {
@@ -38,11 +39,21 @@ const App: React.FC<{}> = () => {
         setCurrScope(s);
     };
 
+    // Add variables to be displayed on waveform
+    const addVar = (v: Variable): void => {
+        console.log(v);
+        setDisplayVars([...displayVars, v]);
+        console.log(displayVars);
+    };
     return (
         <Layout>
-            <Toolbar />
+            <CurrentScope scope={currScope} addVar={addVar}></CurrentScope>
             <ScopeTree scope={vcd && vcd.toplevel} setCurrScope={setScope} />
-            <CurrentScope scope={currScope}></CurrentScope>
+            <WavePanel
+                timescale={vcd && vcd.timescale}
+                changes={vcd && vcd.changes}
+                variables={displayVars}
+            ></WavePanel>
         </Layout>
     );
 };
