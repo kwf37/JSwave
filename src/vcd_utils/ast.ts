@@ -158,6 +158,12 @@ export interface BitValue {
     encoding: Encoding;
 }
 
+export function bitValueString(b: BitValue): string {
+    const reducer = (acc: string, bit: Value) => acc + bit;
+    const bitString = b.bit_values.reduce(reducer, b.encoding);
+    return bitString;
+}
+
 export enum Encoding {
     Binary = "b",
     Real = "r",

@@ -26,8 +26,6 @@ const App: React.FC<{}> = () => {
         if (arg.status) {
             // Parsed Successfully!
             setVCD(arg.value);
-            console.log("After setVCD");
-            console.log(vcd);
         } else {
             console.log("File did not parse correctly:");
         }
