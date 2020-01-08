@@ -62,7 +62,7 @@ export const ScopeTree: React.FC<ScopeTreeProps> = props => {
             component="nav"
             aria-labelledby="nested-list-subheader"
             subheader={
-                <ListSubheader component="div" id="nested-list-subheader">
+                <ListSubheader disableSticky component="div" id="nested-list-subheader">
                     Scope Hierarchy
                 </ListSubheader>
             }

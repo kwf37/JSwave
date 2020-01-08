@@ -16,7 +16,7 @@ const CurrentScope: React.FC<CurrScopeProps> = props => {
             component="nav"
             aria-labelledby="nested-list-subheader"
             subheader={
-                <ListSubheader component="div" id="nested-list-subheader">
+                <ListSubheader disableSticky component="div" id="nested-list-subheader">
                     Current Scope Variables
                 </ListSubheader>
             }
