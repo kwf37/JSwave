@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import * as ReactDOM from "react-dom";
 import "./App.css";
 import { Toolbar } from "./components/Toolbar";
+import { CurrentSignals } from "./components/CurrentSignals";
 import { WavePanel } from "./components/WavePanel";
 import { ScopeTree } from "./components/ScopeTree";
 import { Layout } from "./components/Layout";
@@ -39,7 +40,7 @@ const App: React.FC<{}> = () => {
 
     // Add variables to be displayed on waveform
     const addVar = (v: Variable): void => {
-        console.log(v);
+        // console.log(v);
         setDisplayVars([...displayVars, v]);
         console.log(displayVars);
     };
@@ -47,6 +48,7 @@ const App: React.FC<{}> = () => {
         <Layout>
             <CurrentScope scope={currScope} addVar={addVar}></CurrentScope>
             <ScopeTree scope={vcd && vcd.toplevel} setCurrScope={setScope} />
+            <CurrentSignals variables={displayVars} />
             <WavePanel
                 timescale={vcd && vcd.timescale}
                 changes={vcd && vcd.changes}
