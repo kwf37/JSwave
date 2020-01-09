@@ -1,10 +1,9 @@
 import React from "react";
-import Grid from '@material-ui/core/Grid';
-import SplitPane from 'react-split-pane';
+import Drawer from '@material-ui/core/Drawer';
 import "./Layout.css";
 
 export interface LayoutProps {
-    // Expect three child nodes, [header, sidepanel content, main panel content]
+    // Expect three child nodes, [current scope, scope tree, main panel content]
     children: [React.ReactNode, React.ReactNode, React.ReactNode];
 }
 
@@ -17,14 +16,14 @@ const menuStyles = {
 export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
     return (
         <div>
-            <Grid item xs={12}>
+            <Drawer
+                variant="permanent"
+                anchor="left"
+            >
                 <div>{props.children[0]}</div>
-            </Grid>
-            <SplitPane split="vertical" allowResize={true} defaultSize={'30%'} minSize={'100px'} primary="first">
                 <div style={menuStyles}>{props.children[1]}</div>
-                <div>{props.children[2]}</div>
-            </SplitPane>
+            </Drawer>
+            <div>{props.children[2]}</div>
         </div>
     );
 };
-
