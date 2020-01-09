@@ -1,1 +1,12 @@
+.outerContainer {
+    display: flex;
+    flex-direction: row;
+}
 
+.signalsPanel {
+    flex-shrink: 0;
+}
+
+.wavePanel {
+    flex-grow: 1;
+}

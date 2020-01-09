@@ -45,7 +45,9 @@ const App: React.FC<{}> = () => {
         console.log(displayVars);
     };
     return (
-        <Layout>
+        <Layout
+            drawerWidth={'200px'}
+        >
             <CurrentScope scope={currScope} addVar={addVar}></CurrentScope>
             <ScopeTree scope={vcd && vcd.toplevel} setCurrScope={setScope} />
             <CurrentSignals variables={displayVars} />
