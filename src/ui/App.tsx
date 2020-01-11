@@ -43,9 +43,13 @@ const App: React.FC<{}> = () => {
     const addVar = (v: Variable): void => {
         v.key = list_key;
         setDisplayVars([...displayVars, v]);
-        //console.log(displayVars);
         list_key += 1;
     };
+
+    const setVars = (vars: Variable[]): void => {
+        var newArray = vars.slice();
+        setDisplayVars(newArray);
+    }
 
     return (
         <Layout
@@ -53,7 +57,7 @@ const App: React.FC<{}> = () => {
         >
             <CurrentScope scope={currScope} addVar={addVar}></CurrentScope>
             <ScopeTree scope={vcd && vcd.toplevel} setCurrScope={setScope} />
-            <CurrentSignals variables={displayVars} fontSize={14} />
+            <CurrentSignals variables={displayVars} setVars={setVars} fontSize={14} />
             <WavePanel
                 timescale={vcd && vcd.timescale}
                 changes={vcd && vcd.changes}

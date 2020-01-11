@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 interface CurrentSignalsProps {
     variables: Variable[];
     fontSize: number;
+    setVars: (vars: Variable[]) => void;
 };
 
 const useStyles = makeStyles({
@@ -20,12 +21,28 @@ const useStyles = makeStyles({
     }
 });
 
-// const onDrop = ({ removedIndex, addedIndex }) => {
-//     setItems(items => arrayMove(items, removedIndex, addedIndex));
-// };
+function array_move(arr: any[], old_index: any, new_index: any) {
+    if (new_index >= arr.length) {
+        var k = new_index - arr.length + 1;
+        while (k--) {
+            arr.push(undefined);
+        }
+    }
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    return arr;
+};
+
+interface onDropArgs {
+    removedIndex: number,
+    addedIndex: number
+}
+
 
 export const CurrentSignals: React.FC<CurrentSignalsProps> = (props: CurrentSignalsProps) => {
     const classes = useStyles({});
+    const onDrop = ({ removedIndex, addedIndex }: onDropArgs) => {
+        props.setVars(array_move(props.variables, removedIndex, addedIndex));
+    };
 
     return (
         <List
@@ -35,7 +52,7 @@ export const CurrentSignals: React.FC<CurrentSignalsProps> = (props: CurrentSign
                 </ListSubheader>
             }
         >
-            <Container dragHandleSelector=".drag-handle" lockAxis="y">  {/*onDrop={onDrop}> */}
+            <Container dragHandleSelector=".drag-handle" lockAxis="y" onDrop={onDrop}>
                 {props.variables.map(v => {
                     return (
                         <Draggable key={v.key}>
