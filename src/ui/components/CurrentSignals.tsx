@@ -4,13 +4,14 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { ListItemSecondaryAction, ListItemIcon } from "@material-ui/core";
+import { ListItemSecondaryAction, ListItemIcon, Typography } from "@material-ui/core";
 import DragHandleIcon from "@material-ui/icons/DragHandle";
 import { Container, Draggable } from "react-smooth-dnd";
 import { makeStyles } from '@material-ui/core/styles';
 
 interface CurrentSignalsProps {
     variables: Variable[];
+    fontSize: number;
 };
 
 const useStyles = makeStyles({
@@ -40,7 +41,11 @@ export const CurrentSignals: React.FC<CurrentSignalsProps> = (props: CurrentSign
                         <Draggable key={v.key}>
                             <ListItem>
                                 <ListItemText
-                                    primary={`${refString(v.ref)}`}
+                                    primary={
+                                        <Typography style={{ fontSize: props.fontSize }}>
+                                            {refString(v.ref)}
+                                        </Typography>
+                                    }
                                 />
                                 <ListItemSecondaryAction>
                                     <ListItemIcon className="drag-handle" classes={{ root: classes.root }}>
