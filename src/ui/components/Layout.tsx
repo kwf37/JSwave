@@ -14,6 +14,18 @@ export interface LayoutProps {
     drawerWidth: ReactText;
 }
 
+const draggerStyles = {
+    width: '5px',
+    cursor: 'ew-resize',
+    padding: '4px 0 0',
+    borderTop: '1px solid #ddd',
+    position: 'absolute' as 'absolute',
+    top: 0,
+    bottom: 0,
+    zIndex: 100,
+    backgroundColor: '#f4f7f9'
+};
+
 const menuStyles = {
     backgroundColor: "#f5f5f5",
     top: 0,

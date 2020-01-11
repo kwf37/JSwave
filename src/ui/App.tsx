@@ -49,11 +49,11 @@ const App: React.FC<{}> = () => {
 
     return (
         <Layout
-            drawerWidth={'200px'}
+            drawerWidth={200}
         >
             <CurrentScope scope={currScope} addVar={addVar}></CurrentScope>
             <ScopeTree scope={vcd && vcd.toplevel} setCurrScope={setScope} />
-            <CurrentSignals variables={displayVars} />
+            <CurrentSignals variables={displayVars} fontSize={14} />
             <WavePanel
                 timescale={vcd && vcd.timescale}
                 changes={vcd && vcd.changes}
