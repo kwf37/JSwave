@@ -107,6 +107,7 @@ export interface Variable {
     size: number;
     identifier: string;
     ref: Ref;
+    key?: number;
 }
 
 function isRef2(ref: Ref): ref is Ref2 {

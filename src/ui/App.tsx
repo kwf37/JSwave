@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import * as ReactDOM from "react-dom";
 import "./App.css";
-import { Toolbar } from "./components/Toolbar";
 import { CurrentSignals } from "./components/CurrentSignals";
 import { WavePanel } from "./components/WavePanel";
 import { ScopeTree } from "./components/ScopeTree";
@@ -16,6 +15,8 @@ declare global {
         registerVCDCallback: (f: (event: any, arg: any) => void) => void;
     }
 }
+
+let list_key = 0;
 
 const App: React.FC<{}> = () => {
     const [vcd, setVCD] = useState<VCD | null>(null);
@@ -40,10 +41,12 @@ const App: React.FC<{}> = () => {
 
     // Add variables to be displayed on waveform
     const addVar = (v: Variable): void => {
-        // console.log(v);
+        v.key = list_key;
         setDisplayVars([...displayVars, v]);
-        console.log(displayVars);
+        //console.log(displayVars);
+        list_key += 1;
     };
+
     return (
         <Layout
             drawerWidth={'200px'}
