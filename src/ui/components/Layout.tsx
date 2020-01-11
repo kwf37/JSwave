@@ -5,8 +5,20 @@ import "./Layout.css";
 export interface LayoutProps {
     // Expect three child nodes, [current scope, scope tree, current signals, main panel content]
     children: [React.ReactNode, React.ReactNode, React.ReactNode, React.ReactNode];
-    drawerWidth: ReactText;
+    drawerWidth: number;
 }
+
+const draggerStyles = {
+    width: '5px',
+    cursor: 'ew-resize',
+    padding: '4px 0 0',
+    borderTop: '1px solid #ddd',
+    position: 'absolute' as 'absolute',
+    top: 0,
+    bottom: 0,
+    zIndex: 100,
+    backgroundColor: '#f4f7f9'
+};
 
 const menuStyles = {
     backgroundColor: '#f5f5f5',
@@ -24,6 +36,13 @@ export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
             >
                 <div>{props.children[0]}</div>
                 <div style={menuStyles}>{props.children[1]}</div>
+                <div
+                    id="dragger"
+                    // onMouseDown={event => {
+                    //     this.handleMousedown(event);
+                    // }}
+                    style={{ left: props.drawerWidth - 4, ...draggerStyles }}
+                />
             </Drawer>
             <div className="outerContainer" style={{ paddingLeft: props.drawerWidth }}>
                 <div className="signalsPanel">{props.children[2]}</div>

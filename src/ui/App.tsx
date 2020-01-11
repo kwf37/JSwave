@@ -49,7 +49,7 @@ const App: React.FC<{}> = () => {
 
     return (
         <Layout
-            drawerWidth={'200px'}
+            drawerWidth={200}
         >
             <CurrentScope scope={currScope} addVar={addVar}></CurrentScope>
             <ScopeTree scope={vcd && vcd.toplevel} setCurrScope={setScope} />
