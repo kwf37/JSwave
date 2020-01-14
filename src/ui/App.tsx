@@ -52,9 +52,7 @@ const App: React.FC<{}> = () => {
     }
 
     return (
-        <Layout
-            drawerWidth={200}
-        >
+        <Layout>
             <CurrentScope scope={currScope} addVar={addVar}></CurrentScope>
             <ScopeTree scope={vcd && vcd.toplevel} setCurrScope={setScope} />
             <CurrentSignals variables={displayVars} setVars={setVars} fontSize={14} />

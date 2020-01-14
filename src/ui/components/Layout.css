@@ -4,9 +4,9 @@
 }
 
 .signalsPanel {
-    flex: 2;
+    flex-shrink: 0;
 }
 
 .wavePanel {
-    flex: 5;
+    flex-grow: 1;
 }

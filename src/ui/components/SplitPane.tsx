@@ -8,36 +8,34 @@ interface SplitPaneProps {
 
 const useStyles = makeStyles({
     outer: {
-        height: "100%",
-        width: "100%",
-        display: "inline-block",
-        //flexDirection: "row",
+        display: "flex",
     },
-    seperator: {
-        width: "10px",
-        height: "100px",
+    separator: {
+        width: "4px",
+        height: "100%",
         cursor: 'ew-resize',
         display: "inline-block",
+        position: 'absolute' as 'absolute',
+        top: 0,
+        bottom: 0,
+        zIndex: 100,
+        backgroundColor: '#f4f7f9'
     },
     div1: {
+        flexShrink: 0,
         height: "100%",
-        display: "inline-block",
 
     },
-    //flexGrow: 1 },
     div2: {
         height: "100%",
-        width: "auto",
-        display: "inline-block",
+        flexGrow: 1,
     },
-    //flexGrow: 3 },
 });
 
 export const SplitPane: React.FC<SplitPaneProps> = props => {
     const classes = useStyles(props);
-    const [width, setWidth] = useState(500);
+    const [width, setWidth] = useState(200);
     const [lastWidth, setLastWidth] = useState(width);
-    const [dividerColor, setDividerColor] = useState("red");
     const [isResizing, setIsResizing] = useState(false);
     const [lastX, setLastX] = useState(0);
 
@@ -54,13 +52,13 @@ export const SplitPane: React.FC<SplitPaneProps> = props => {
         }
 
         const deltaX = e.nativeEvent.clientX - lastX;
-        //console.log(deltaX);
-        let minWidth = 50;
-        let maxWidth = 600;
-        //if (lastWidth + deltaX > minWidth && lastWidth + deltaX < maxWidth) {
-        console.log(lastWidth);
-        setWidth(lastWidth + deltaX);
-        //}
+
+        let minWidth = 150;
+        let maxWidth = 266;
+        if (lastWidth + deltaX > minWidth && lastWidth + deltaX < maxWidth) {
+            //console.log(lastWidth);
+            setWidth(lastWidth + deltaX);
+        }
     };
 
     const handleMouseup = (e: SyntheticEvent<HTMLDivElement, MouseEvent>) => {
@@ -77,8 +75,8 @@ export const SplitPane: React.FC<SplitPaneProps> = props => {
                 {props.children[0]}
             </div>
             <div
-                className={classes.seperator}
-                style={{ backgroundColor: dividerColor }}
+                className={classes.separator}
+                style={{ marginLeft: width }}
                 onMouseDown={handleMousedown}
             ></div>
             <div className={classes.div2}>{props.children[1]}</div>
