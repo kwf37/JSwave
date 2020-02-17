@@ -39,7 +39,7 @@ function timeHelper(changes: Timestep[]) {
     return [finalTime, svgWidth];
 }
 
-
+//TODO: maybe change x1, x2, ...
 interface SVGProps {
     x1: number; // Left
     x2: number; // Right
@@ -170,8 +170,9 @@ export const WavePanel: React.FC<WavePanelProps> = props => {
         .domain([0, finalTime])
         .range([0, svgWidth]);
 
+    // use these two numbers for calculating
     const signalHeight = 16;
-    const sep = 8;
+    const sep = 30;
 
     return (
         <div
@@ -198,6 +199,7 @@ export const WavePanel: React.FC<WavePanelProps> = props => {
                     }}
                 ></rect>
                 {props.variables.map((v, i) => (
+                    //TODO: change these so they're not hardcoded?
                     <MultiBitSignalLines
                         label={""}
                         x1={0}
